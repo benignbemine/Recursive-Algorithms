@@ -170,10 +170,37 @@ tree.left.right = new BinaryTree(200);
 //                    8
 
 // you'll need to create a binary search tree constructor!
-var arrayToBinarySearchTree = function(array){
 
+// constructor and methods
+var BinarySearchTree = function(value){
+  this.value = value;
+  this.right = null;
+  this.left = null;
 };
 
+BinarySearchTree.prototype.addLeft = function(tree){
+  this.left = tree;
+};
+
+BinarySearchTree.prototype.addRight = function(tree){
+  this.right = tree;
+};
+
+// Solution:
+BinarySearchTree.arrayToBST = function(array){
+  return (function buildTree(array, left, right){
+    var middle = Math.floor((right + left) / 2);
+    var tree = new BinarySearchTree(array[middle]);
+    left <= middle - 1 && tree.addLeft(buildTree(array, left, middle - 1));
+    right >= middle + 1 && tree.addRight(buildTree(array, middle + 1, right));
+    return tree;
+  })(array, 0, array.length - 1);
+};
+
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 
 // answer to the permutations problem given in the review session.
 function permutations(rounds, choices){
